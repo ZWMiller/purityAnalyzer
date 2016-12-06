@@ -41,7 +41,7 @@ int pl_FitParams(){
     lowcent[c] = anaConst::centLow[c];
     highcent[c] = anaConst::centHigh[c];
   }
-  const int numparams = 9;
+  const int numparams = 12;
 
   // create generic structures for use in all plots
   TPaveText* lbl[numCentBins][numEtaBins][numparams];
@@ -49,7 +49,7 @@ int pl_FitParams(){
   TPaveText* runInfo[numCentBins][numEtaBins];
   TPaveText* runInfo2[numCentBins][numEtaBins];
   char textLabel[100]; 
-  TString parNames[12] = {" #pi C"," #pi #mu"," #pi #sigma"," Kp C"," Kp #mu"," Kp #sigma",
+  TString parNames[15] = {" #pi C"," #pi #mu"," #pi #sigma"," K C"," K #mu"," K #sigma", " p C"," p #mu"," p #sigma",
     " e C"," e #mu"," e #sigma"," mer. #pi C"," mer. #pi #mu"," mer. #pi #sigma"};
 
   // Load all trigger type files
@@ -109,6 +109,9 @@ int pl_FitParams(){
     {0,0,0,0},
     {1.0,4.0,30.769,1.0},
     {-1.0,-8.02,17.31,12.04},
+    {0,0,0,0},
+    {43.0, 17.77,3.25,38.29},
+    {43.0, 17.77,3.25,38.29},
     {0,0,0,0},
     {43.0, 17.77,3.25,38.29},
     {43.0, 17.77,3.25,38.29},
@@ -220,7 +223,7 @@ int pl_FitParams(){
             //fitTotal[ier][centbin][etabin][parnum]->SetParameter(0,fitBEMC[ier][centbin][etabin][parnum]->GetParameter(0));
             //fitTotal[ier][centbin][etabin][parnum]->SetParameter(2,fitBEMC[ier][centbin][etabin][parnum]->GetParameter(2));
 
-            cout << "+++Fit total Here+++" << endl;
+            if(DEBUG)cout << "+++Fit total Here+++" << endl;
             parTotal[1][centbin][etabin][parnum]->Fit(fitTotal[ier][centbin][etabin][parnum],"R0");
             fitTotal[ier][centbin][etabin][parnum]->SetParameter(0,fitTotal[ier][centbin][etabin][parnum]->GetParameter(0)*(0.92+0.08*ier));
             fitTotal[ier][centbin][etabin][parnum]->SetParameter(2,fitTotal[ier][centbin][etabin][parnum]->GetParameter(2)*(0.92+0.08*ier));
@@ -253,7 +256,7 @@ int pl_FitParams(){
     {
       if(DEBUG) cout << "plot settings eta: " << etabin << endl;
       paramCanvTotal[centbin][etabin]= new TCanvas(Form("paramCanvTotal_%i_%i",centbin,etabin),"Parameter Fits",50,50,1050,1050);
-      paramCanvTotal[centbin][etabin]->Divide(3,3);
+      paramCanvTotal[centbin][etabin]->Divide(3,4);
     }
   }
   TCanvas* paramCanvRatio[numCentBins][numEtaBins];
@@ -263,7 +266,7 @@ int pl_FitParams(){
     {
       if(DEBUG) cout << "plot settings eta: " << etabin << endl;
       paramCanvRatio[centbin][etabin]= new TCanvas(Form("paramCanvRatio_%i_%i",centbin,etabin),"Parameter Fits",50,50,1050,1050);
-      paramCanvRatio[centbin][etabin]->Divide(3,3);
+      paramCanvRatio[centbin][etabin]->Divide(3,4);
     }
   }
 
@@ -284,7 +287,7 @@ int pl_FitParams(){
         for(int j=0; j<3; j++)
         {
           paramCanv[j][r][centbin][etabin]= new TCanvas(Form("paramCanv_%i_%i_%i_%i",j,r,centbin,etabin),"Parameter Fits",50,50,1050,1050);
-          paramCanv[j][r][centbin][etabin]->Divide(3,3);
+          paramCanv[j][r][centbin][etabin]->Divide(3,4);
         }
       }
     }
@@ -336,15 +339,15 @@ int pl_FitParams(){
           parBEMCRatio[t][centbin][etabin][parnum]->GetYaxis()->SetRangeUser(0.8,1.2);
           lineLow->Draw("same");
           lineHigh->Draw("same");
-          cout<<"xxx"<<endl;
+          if(DEBUG)cout<<"xxx"<<endl;
           if(DEBUG) cout << "SMDL Par Num: " << parnum << endl;
           parSMDL[t][centbin][etabin][parnum]->SetTitle("SMD "+title);
           parSMDL[t][centbin][etabin][parnum]->SetMarkerStyle(20+t);
           parSMDL[t][centbin][etabin][parnum]->SetMarkerColor(3);
           parSMDL[t][centbin][etabin][parnum]->SetLineColor(3);
-          cout<<"xxx"<<endl;
+          if(DEBUG)cout<<"xxx"<<endl;
           setRangeAndDraw(parSMDL[t][centbin][etabin][parnum],parnum,paramCanv[1][t][centbin][etabin]);
-          cout<<"xxx"<<endl;
+          if(DEBUG)cout<<"xxx"<<endl;
           //findRejectPoints(t,2,parnum);
           fitSMDL[t][centbin][etabin][parnum]->SetLineColor(3);
           cout << "Fit: SMDL, Trig: " << t << ", Par: " << parnum << endl; 
@@ -358,7 +361,7 @@ int pl_FitParams(){
           }
           lineLow->Draw("same");
           lineHigh->Draw("same");
-          cout<<"xxx"<<endl;
+          if(DEBUG)cout<<"xxx"<<endl;
           if(DEBUG) cout << "SMDT Par Num: " << parnum << endl;
           parSMDT[t][centbin][etabin][parnum]->SetTitle("SMD2 "+title);
           parSMDT[t][centbin][etabin][parnum]->SetMarkerStyle(20+t);

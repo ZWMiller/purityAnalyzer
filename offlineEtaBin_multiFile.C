@@ -558,7 +558,7 @@ void makeHist(const char* FileName, Int_t trig,const char* Cut)
         TRandom3 *gRnd= new TRandom3(0);
         TH1D* HH;
         if(DEBUG) cout << "At iteration loop" << endl;
-        for(int it=0; it<10; it++)
+        for(int it=0; it<150; it++)
         {
           fitCom[centbin][etabin][ptbin]->SetParameters(parStorage);
           HH = (TH1D*)projnSigmaE[centbin][etabin][ptbin]->Clone("junk");
@@ -852,11 +852,8 @@ void makeHist(const char* FileName, Int_t trig,const char* Cut)
         fitPars[ii][centbin][etabin] -> SetLineColor(kRed);
         if(DEBUG) cout << "at range setting" << endl;
         fitPars[ii][centbin][etabin] -> GetXaxis()->SetRangeUser(anaConst::lowPt,anaConst::highPt);
-        if(ii==1||ii==4||ii==7) fitPars[ii][centbin][etabin] -> GetYaxis()->SetRangeUser(-10,0);
-        if(ii==10) fitPars[ii][centbin][etabin] -> GetYaxis()->SetRangeUser(-1,1);
-        if(ii==13) fitPars[ii][centbin][etabin] -> GetYaxis()->SetRangeUser(2,9);
-        if(ii==2||ii==5||ii==8||ii==11) fitPars[ii][centbin][etabin] -> GetYaxis()->SetRangeUser(0.7,1.5);
-        if(ii==14) fitPars[ii][centbin][etabin] -> GetYaxis()->SetRangeUser(0,3.5);
+        if(ii==1||ii==4||ii==7||ii==10||ii==13) fitPars[ii][centbin][etabin] -> GetYaxis()->SetRangeUser(-10,3);
+        if(ii==2||ii==5||ii==8||ii==11||ii==14) fitPars[ii][centbin][etabin] -> GetYaxis()->SetRangeUser(0.7,1.5);
         if(DEBUG) cout << "at drawing" << endl;
         fitPars[ii][centbin][etabin] -> Draw("AP");
         fitPars[ii][centbin][etabin] -> SetName(Form("fitpar_%i_%i_%i",centbin,etabin,ii));//Set object name for write to .root
