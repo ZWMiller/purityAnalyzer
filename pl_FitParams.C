@@ -541,17 +541,27 @@ void setRangeAndDraw(TGraphErrors* gr, int parnum,TCanvas* can)
       gr->GetYaxis()->SetRangeUser(0.7,1.5);
       break;
     case 7:
-      gr->GetYaxis()->SetRangeUser(-0.6,0);
+      gr->GetYaxis()->SetRangeUser(-10,0);
       break;
     case 8:
       gr->GetYaxis()->SetRangeUser(0.7,1.5);
       break;
     case 10:
-      gr->GetYaxis()->SetRangeUser(2,9);
+      gr->GetYaxis()->SetRangeUser(-5,5);
       break;
     case 11:
-      gr->GetYaxis()->SetRangeUser(0,3.5);
+      gr->GetYaxis()->SetRangeUser(0.7,1.5);
       break;
+    case 13:
+      gr->GetYaxis()->SetRangeUser(-5,7);
+      break;
+    case 14:
+      gr->GetYaxis()->SetRangeUser(0.7,1.5);
+      break;
+    default:
+      gr->GetYaxis()->SetRangeUser(-10,10);
+      break;
+
   }
   gr->Draw("ape");
   if(parnum%3==0) gPad->SetLogy();
